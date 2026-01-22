@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+  width: 100%;
+  overflow-x: hidden;   /* ✅ IMPORTANT */
+}
+
+body {
+  width: 100%;
+  overflow-x: hidden;   /* ✅ IMPORTANT */
+}
+
+#root {
+  width: 100%;
+  overflow-x: hidden;   /* ✅ IMPORTANT */
+}
+
+/* animations – unchanged */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 18s linear infinite;
+}
