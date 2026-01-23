@@ -123,9 +123,9 @@ export default function ProductDetailsPage() {
         buyNowItem: {
           id: enhancedProduct.id,
           title: enhancedProduct.title,
-          price: enhancedProduct.price,   // ✅ must be number
+          price: enhancedProduct.price,   
           images: enhancedProduct.images,
-          qty: quantity,                  // ✅ VERY IMPORTANT FIX
+          qty: quantity,                 
           category: enhancedProduct.category,
           size: selectedSize,
           color: selectedColor,
@@ -215,7 +215,6 @@ export default function ProductDetailsPage() {
       exit={{ opacity: 0 }}
       className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30"
     >
-
 
       {/* Success Notification */}
       <AnimatePresence>
