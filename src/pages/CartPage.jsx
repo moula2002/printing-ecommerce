@@ -92,7 +92,7 @@ export default function CartPage() {
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-32 pb-20"
+                className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-38 pb-20"
             >
                 <div className="max-w-md mx-auto px-4 text-center">
                     <motion.div

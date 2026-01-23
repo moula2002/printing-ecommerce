@@ -334,7 +334,7 @@ const subtotal = itemsToShow.reduce(
       className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50"
     >
       {/* Header */}
-      <div className="pt-24 pb-8 bg-gradient-to-r from-gray-900 to-black text-white">
+      <div className="pt-24 pb-2 bg-gradient-to-r from-gray-900 to-black text-white">
         <div className="max-w-6xl mx-auto px-4">
           <motion.button
             initial={{ x: -20, opacity: 0 }}

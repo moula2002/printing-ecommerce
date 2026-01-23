@@ -12,7 +12,7 @@ import {
 } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
-const NAVBAR_HEIGHT = 68;
+const NAVBAR_HEIGHT = 60;
 
 const SecondHeader = () => {
   const [activeCategory, setActiveCategory] = useState("All Products");
@@ -44,8 +44,9 @@ const SecondHeader = () => {
             <div className="relative" onMouseLeave={() => setIsCategoriesOpen(false)}>
               <button
                 onMouseEnter={() => setIsCategoriesOpen(true)}
-                className="flex items-center gap-2 px-5 py-2 bg-black text-white rounded-xl text-sm font-bold shadow"
+                className="flex items-center gap-2 px-5 py-2 bg-black text-white rounded-xl text-sm font-bold shadow mt-2"
               >
+
                 <FiGrid />
                 All Categories
                 <FiChevronDown className={`transition ${isCategoriesOpen ? "rotate-180" : ""}`} />
@@ -88,6 +89,7 @@ const SecondHeader = () => {
       {/* ================= MOBILE DROPDOWN ONLY ================= */}
       <div
         className="lg:hidden fixed left-0 right-0 z-40 bg-white border-b"
+
         style={{ top: NAVBAR_HEIGHT }}
       >
         <div className="px-4 py-3">
