@@ -12,7 +12,6 @@ import {
   FiTruck,
   FiPackage,
   FiTrendingUp,
-  FiTruck as FiDelivery,
   FiRefreshCw,
   FiUsers,
   FiInfo,
@@ -33,7 +32,6 @@ export default function ProductDetailsPage() {
   const [selectedColor, setSelectedColor] = useState("Black");
   const [showAddedToCart, setShowAddedToCart] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [isWishlisted, setIsWishlisted] = useState(false);
   const [activeTab, setActiveTab] = useState("description");
   const [showBuyNowConfirm, setShowBuyNowConfirm] = useState(false);
   const [zoomImage, setZoomImage] = useState(false);
@@ -90,12 +88,6 @@ export default function ProductDetailsPage() {
         { label: "Origin", value: "Made in India" },
         { label: "Care Instructions", value: "Machine Wash Cold" }
       ],
-      delivery: {
-        standard: "2-3 business days",
-        express: "1 day",
-        freeThreshold: 1000,
-        returnPolicy: "30-day easy return"
-      },
       warranty: product.warranty || "1 year manufacturer warranty",
       availability: product.availability || "In Stock",
       soldCount: product.soldCount || 250,
@@ -123,24 +115,24 @@ export default function ProductDetailsPage() {
     setTimeout(() => setShowAddedToCart(false), 3000);
   };
 
- const handleBuyNow = () => {
-  if (!enhancedProduct) return;
+  const handleBuyNow = () => {
+    if (!enhancedProduct) return;
 
-  navigate("/checkout", {
-    state: {
-      buyNowItem: {
-        id: enhancedProduct.id,
-        title: enhancedProduct.title,
-        price: enhancedProduct.price,   // ✅ must be number
-        images: enhancedProduct.images,
-        qty: quantity,                  // ✅ VERY IMPORTANT FIX
-        category: enhancedProduct.category,
-        size: selectedSize,
-        color: selectedColor,
+    navigate("/checkout", {
+      state: {
+        buyNowItem: {
+          id: enhancedProduct.id,
+          title: enhancedProduct.title,
+          price: enhancedProduct.price,   // ✅ must be number
+          images: enhancedProduct.images,
+          qty: quantity,                  // ✅ VERY IMPORTANT FIX
+          category: enhancedProduct.category,
+          size: selectedSize,
+          color: selectedColor,
+        }
       }
-    }
-  });
-};
+    });
+  };
 
 
   const handleBuyNowWithConfirm = () => {
@@ -151,29 +143,6 @@ export default function ProductDetailsPage() {
     navigate(-1);
   };
 
-  const handleWishlistToggle = () => {
-    setIsWishlisted(!isWishlisted);
-    // In a real app, you would update backend here
-  };
-
-  const handleShare = async () => {
-    if (navigator.share && enhancedProduct) {
-      try {
-        await navigator.share({
-          title: enhancedProduct.title,
-          text: `Check out ${enhancedProduct.title} on our store!`,
-          url: window.location.href,
-        });
-      } catch (error) {
-        console.log('Error sharing:', error);
-      }
-    } else {
-      // Fallback: copy to clipboard
-      navigator.clipboard.writeText(window.location.href);
-      setIsSharing(true);
-      setTimeout(() => setIsSharing(false), 2000);
-    }
-  };
 
   const handleImageZoom = (e) => {
     if (!zoomImage) return;
@@ -246,17 +215,6 @@ export default function ProductDetailsPage() {
       exit={{ opacity: 0 }}
       className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30"
     >
-      {/* Back Button - Mobile */}
-      <motion.button
-        onClick={handleBack}
-        initial={{ x: -20, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        whileHover={{ x: -5 }}
-        className="fixed left-4 top-32 z-50 bg-white/95 backdrop-blur-sm border border-gray-200 rounded-full p-3 shadow-xl hover:shadow-2xl transition-all duration-300 lg:hidden group"
-      >
-        <FiArrowLeft className="text-xl text-gray-700 group-hover:text-black" />
-      </motion.button>
-
       {/* Success Notification */}
       <AnimatePresence>
         {showAddedToCart && (
@@ -334,7 +292,7 @@ export default function ProductDetailsPage() {
                     transform: zoomImage ? 'scale(2)' : 'scale(1)'
                   }}
                 />
-            
+
                 {/* Zoom Hint */}
                 {!zoomImage && (
                   <motion.div
@@ -520,7 +478,6 @@ export default function ProductDetailsPage() {
               { id: "features", label: "Features", icon: FiCheck },
               { id: "specifications", label: "Specifications", icon: FiPackage },
               { id: "reviews", label: "Reviews", icon: FiUsers },
-              { id: "delivery", label: "Delivery", icon: FiDelivery }
             ].map((tab) => (
               <motion.button
                 key={tab.id}
