@@ -113,31 +113,23 @@ export default function TrendingProducts() {
     }, 3000);
   };
 
-  const buyNow = (product, e) => {
-    e?.stopPropagation();
-    
-    // Clear cart and add only this product for buy now
-    const cartProduct = {
-      id: product.id,
-      title: product.title,
-      price: product.price,
-      images: product.images,
-      quantity: 1,
-      ...product
-    };
-    
-    // Create a temporary cart with only this product
-    const tempCart = [cartProduct];
-    
-    // Pass the product directly to checkout without adding to cart context
-    // You'll need to handle this in your checkout page
-    navigate("/checkout", { 
-      state: { 
-        buyNowItem: cartProduct,
-        isBuyNow: true 
-      } 
-    });
+const buyNow = (product, e) => {
+  e?.stopPropagation();
+
+  const buyNowProduct = {
+    id: product.id,
+    title: product.title,
+    price: product.price,
+    images: product.images,
+    qty: 1,
   };
+
+  navigate("/checkout", {
+    state: { buyNowItem: buyNowProduct }
+  });
+};
+
+
 
   return (
     <>

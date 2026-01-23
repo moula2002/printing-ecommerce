@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { 
   FiLock, 
   FiCreditCard, 
@@ -25,6 +25,11 @@ export default function CheckoutPage() {
   const { cart, clearCart, couponApplied } = useCart();
   const navigate = useNavigate();
 
+  const location = useLocation();
+const buyNowItem = location.state?.buyNowItem;
+const itemsToShow = buyNowItem ? [buyNowItem] : cart;
+
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -46,7 +51,12 @@ export default function CheckoutPage() {
   const [showCardDetails, setShowCardDetails] = useState(false);
 
   // Calculate order totals
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+const subtotal = itemsToShow.reduce(
+  (sum, item) => sum + Number(item.price) * Number(item.qty || item.quantity || 1),
+  0
+);
+
+
   const tax = subtotal * 0.08;
   const shipping = subtotal > 1000 ? 0 : 100;
   const discount = couponApplied ? subtotal * 0.1 : 0;
@@ -340,18 +350,6 @@ export default function CheckoutPage() {
             <div>
               <h1 className="text-3xl font-bold">Secure Checkout</h1>
               <p className="text-gray-400 mt-2">Complete your purchase in just a few steps</p>
-            </div>
-            
-            <div className="flex items-center gap-4 bg-white/10 px-6 py-3 rounded-xl">
-              <div className="text-center">
-                <div className="text-2xl font-bold">{cart.length}</div>
-                <div className="text-xs text-gray-300">Items</div>
-              </div>
-              <div className="h-12 w-px bg-white/20"></div>
-              <div className="text-center">
-                <div className="text-2xl font-bold">₹{formatPrice(total)}</div>
-                <div className="text-xs text-gray-300">Total</div>
-              </div>
             </div>
           </div>
         </div>
@@ -667,7 +665,7 @@ export default function CheckoutPage() {
 
               {/* Order Items */}
               <div className="space-y-4 mb-6 max-h-96 overflow-y-auto pr-2">
-                {cart.map((item) => (
+                {itemsToShow.map((item) => (
                   <motion.div
                     key={item.id}
                     initial={{ opacity: 0, x: -20 }}
@@ -681,7 +679,7 @@ export default function CheckoutPage() {
                         className="w-16 h-16 rounded-xl object-cover"
                       />
                       <div className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">
-                        {item.qty}
+                        {item.qty || item.quantity || 1}
                       </div>
                     </div>
                     <div className="flex-1">
@@ -787,3 +785,5 @@ export default function CheckoutPage() {
     </motion.div>
   );
 }
+
+

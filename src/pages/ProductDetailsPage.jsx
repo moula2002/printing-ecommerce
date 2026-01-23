@@ -123,21 +123,25 @@ export default function ProductDetailsPage() {
     setTimeout(() => setShowAddedToCart(false), 3000);
   };
 
-  const handleBuyNow = () => {
-    if (!enhancedProduct) return;
+ const handleBuyNow = () => {
+  if (!enhancedProduct) return;
 
-    // Directly navigate to checkout with product data in state
-    navigate("/checkout", {
-      state: {
-        buyNowItem: {
-          ...enhancedProduct,
-          selectedSize,
-          selectedColor,
-          quantity
-        }
+  navigate("/checkout", {
+    state: {
+      buyNowItem: {
+        id: enhancedProduct.id,
+        title: enhancedProduct.title,
+        price: enhancedProduct.price,   // ✅ must be number
+        images: enhancedProduct.images,
+        qty: quantity,                  // ✅ VERY IMPORTANT FIX
+        category: enhancedProduct.category,
+        size: selectedSize,
+        color: selectedColor,
       }
-    });
-  };
+    }
+  });
+};
+
 
   const handleBuyNowWithConfirm = () => {
     setShowBuyNowConfirm(true);
