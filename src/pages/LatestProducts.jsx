@@ -344,7 +344,7 @@ function LatestProducts() {
                     className="flex-1 bg-gradient-to-r from-gray-800 to-gray-900 text-white py-2 rounded-lg text-sm font-medium hover:shadow-sm transition-all duration-200 flex items-center justify-center gap-1.5"
                   >
                     <FiShoppingCart className="w-3.5 h-3.5" />
-                    Add
+                    Add to Cart
                   </motion.button>
                   <motion.button
                     whileHover={{ scale: 1.02 }}

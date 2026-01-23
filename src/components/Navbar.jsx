@@ -20,13 +20,9 @@ import CreateAccountDrawer from "../pages/auth/CreateAccountDrawer";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { cart } = useCart(); // ✅ CART CONTEXT
+  const { cart } = useCart();
 
-  /* TOTAL CART COUNT (qty wise) */
-  const totalItems = cart.reduce(
-    (sum, item) => sum + item.qty,
-    0
-  );
+  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [openSignIn, setOpenSignIn] = useState(false);
@@ -54,22 +50,22 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
-    { name: "Services", icon: <FiGrid />, href: "#" },
-    { name: "Contact", icon: <FiMail />, href: "#" }
+    { name: "Services", icon: <FiGrid />, path: "/services" },
+    { name: "Contact", icon: <FiMail />, path: "/contact" }
   ];
 
   return (
     <>
-      {/* 🔝 FIXED NAVBAR */}
       <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
             ? "bg-[#FAF9F6]/95 backdrop-blur-md shadow-lg"
             : "bg-[#FAF9F6]"
-          }`}
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between gap-4">
-
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            
             {/* LEFT */}
             <div className="flex items-center gap-4">
               <button
@@ -89,8 +85,8 @@ const Navbar = () => {
               </Link>
             </div>
 
-            {/* SEARCH */}
-            <div className="flex-1 max-w-md hidden sm:block">
+            {/* 🔥 SEARCH BAR (MOBILE + DESKTOP) */}
+            <div className="flex-1 w-full sm:max-w-md">
               <div className="relative">
                 <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 <input
@@ -104,27 +100,23 @@ const Navbar = () => {
 
             {/* RIGHT */}
             <div className="flex items-center gap-4">
-
-              {/* Desktop Nav */}
               <nav className="hidden lg:flex gap-8">
                 {navItems.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={item.path}
                     className="font-semibold text-gray-700 hover:text-gray-900"
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </nav>
 
-              {/* 🛒 CART WITH BADGE */}
               <button
                 onClick={() => navigate("/cart")}
                 className="relative p-2 rounded-lg hover:bg-gray-100"
               >
                 <FiShoppingCart size={22} />
-
                 {totalItems > 0 && (
                   <span className="absolute -top-1 -right-1 bg-black text-white text-[11px] w-5 h-5 rounded-full flex items-center justify-center">
                     {totalItems}
@@ -132,7 +124,7 @@ const Navbar = () => {
                 )}
               </button>
 
-              {/* ACCOUNT */}
+              {/* ACCOUNT DROPDOWN */}
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -141,8 +133,9 @@ const Navbar = () => {
                   <FiUser />
                   <span className="hidden md:block">Account</span>
                   <FiChevronDown
-                    className={`transition ${isDropdownOpen ? "rotate-180" : ""
-                      }`}
+                    className={`transition ${
+                      isDropdownOpen ? "rotate-180" : ""
+                    }`}
                   />
                 </button>
 
@@ -190,7 +183,7 @@ const Navbar = () => {
         </div>
       </motion.header>
 
-      {/* 📱 MOBILE MENU */}
+      {/* MOBILE SIDE MENU (UNCHANGED) */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -220,13 +213,15 @@ const Navbar = () => {
               </Link>
 
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.name}
+                  to={item.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className="flex gap-3 p-3 hover:bg-gray-100 rounded-lg"
                 >
                   {item.icon}
                   {item.name}
-                </a>
+                </Link>
               ))}
 
               <button
@@ -243,7 +238,6 @@ const Navbar = () => {
         )}
       </AnimatePresence>
 
-      {/* AUTH DRAWERS */}
       <SignInDrawer
         open={openSignIn}
         onClose={() => setOpenSignIn(false)}

@@ -1,43 +1,50 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CartProvider } from "./context/CartContext";
+import Navbar from './components/Navbar';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import Contact from './pages/Contact';
 
-import Layout from "./components/Layout";
-import Home from "./pages/Home";
-import TrendingProducts from "./pages/TrendingProducts";
-import ProductDetailsPage from "./pages/ProductDetailsPage";
-import CartPage from "./pages/CartPage";
-import CheckoutPage from "./pages/CheckoutPage";
-import MyOrder from "./pages/MyOrder"; // ✅ ADD THIS
+import TrendingProducts from './pages/TrendingProducts';
+import ProductDetailsPage from './pages/ProductDetailsPage';
+import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import MyOrders from './pages/MyOrder';
+import Services from './pages/Services';
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <CartProvider>
-        <Layout>
-          <Routes>
+        <div className="App">
+          <Navbar />
+          <Layout>
+            <Routes>
+              {/* HOME PAGE */}
+              <Route path="/" element={<Home />} />
 
-            {/* HOME PAGE */}
-            <Route path="/" element={<Home />} />
+              {/* CONTACT PAGE */}
+              <Route path="/contact" element={<Contact />} />
 
-            {/* PRODUCTS PAGE */}
-            <Route path="/products" element={<TrendingProducts />} />
+               {/* SERVICES PAGE */}
+              <Route path="/services" element={<Services/>} />
 
-            {/* PRODUCT DETAILS PAGE */}
-            <Route path="/product/:id" element={<ProductDetailsPage />} />
+              {/* PRODUCTS PAGES */}
+              <Route path="/products" element={<TrendingProducts />} />
+              <Route path="/product/:id" element={<ProductDetailsPage />} />
 
-            {/* CART PAGE */}
-            <Route path="/cart" element={<CartPage />} />
+              {/* CART & CHECKOUT */}
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
 
-            {/* CHECKOUT PAGE */}
-            <Route path="/checkout" element={<CheckoutPage />} />
-
-            {/* MY ORDERS PAGE */}
-            <Route path="/myorders" element={<MyOrder />} />
-
-          </Routes>
-        </Layout>
+              {/* ORDERS */}
+              <Route path="/myorders" element={<MyOrders />} />
+            </Routes>
+          </Layout>
+        </div>
       </CartProvider>
-    </BrowserRouter>
+    </Router>
   );
 }
 

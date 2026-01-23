@@ -32,11 +32,12 @@ export default function CartPage() {
     }, []);
 
     // Fixed price calculations with fallback to prevent NaN
-    const subtotal = cart.reduce((sum, item) => {
-        const price = parseFloat(item.price) || 0;
-        const quantity = parseInt(item.qty) || 0;
-        return sum + (price * quantity);
-    }, 0);
+const subtotal = cart.reduce((sum, item) => {
+    const price = parseFloat(item.price?.toString().replace("₹", "")) || 0;
+    const quantity = item.qty || item.quantity || 1;
+    return sum + price * quantity;
+}, 0);
+
 
     const shipping = subtotal > 100 ? 0 : 9.99;
     const tax = subtotal * 0.08;

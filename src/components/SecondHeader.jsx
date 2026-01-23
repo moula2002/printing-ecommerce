@@ -9,49 +9,46 @@ import {
   FiScissors,
   FiStar,
   FiGrid,
-  FiArrowRight,
 } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NAVBAR_HEIGHT = 68;
-const SECOND_HEADER_HEIGHT = 72;
 
 const SecondHeader = () => {
   const [activeCategory, setActiveCategory] = useState("All Products");
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const categories = [
-    { name: "Photo Albums", icon: <FiStar />, id: "photo-albums", description: "Premium & custom photo albums" },
-    { name: "Snapbooks", icon: <FiPackage />, id: "snapbooks", description: "Modern snap & memory books" },
-    { name: "Bill Books", icon: <FiFileText />, id: "bill-books", description: "GST & custom billing books" },
-    { name: "Boxes", icon: <FiPackage />, id: "boxes", description: "Corrugated & specialty boxes" },
-    { name: "Envelopes", icon: <FiMail />, id: "envelopes", description: "Bubble & poly mailers" },
-    { name: "Labels", icon: <FiTag />, id: "labels", description: "Shipping & product labels" },
-    { name: "Poly Bags", icon: <FiShoppingBag />, id: "poly-bags", description: "Clear & printed bags" },
-    { name: "Tape", icon: <FiScissors />, id: "tape", description: "Packaging & carton tape" },
+    { name: "Photo Albums", icon: <FiStar />, id: "photo-albums" },
+    { name: "Snapbooks", icon: <FiPackage />, id: "snapbooks" },
+    { name: "Bill Books", icon: <FiFileText />, id: "bill-books" },
+    { name: "Boxes", icon: <FiPackage />, id: "boxes" },
+    { name: "Envelopes", icon: <FiMail />, id: "envelopes" },
+    { name: "Labels", icon: <FiTag />, id: "labels" },
+    { name: "Poly Bags", icon: <FiShoppingBag />, id: "poly-bags" },
+    { name: "Tape", icon: <FiScissors />, id: "tape" },
   ];
 
   return (
     <>
-      {/* ================= DESKTOP ================= */}
+      {/* ================= DESKTOP DROPDOWN ================= */}
       <div
-        className="hidden lg:block fixed left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200"
+        className="hidden lg:block fixed left-0 right-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-200"
         style={{ top: NAVBAR_HEIGHT }}
       >
         <div className="max-w-7xl mx-auto px-6 py-3">
-          <div className="flex items-center justify-between gap-6">
+          <div className="flex items-center gap-6">
 
-            {/* ALL CATEGORIES */}
+            {/* DESKTOP ALL CATEGORIES */}
             <div className="relative" onMouseLeave={() => setIsCategoriesOpen(false)}>
               <button
                 onMouseEnter={() => setIsCategoriesOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-xl text-sm font-bold"
+                className="flex items-center gap-2 px-5 py-2 bg-black text-white rounded-xl text-sm font-bold shadow"
               >
                 <FiGrid />
                 All Categories
-                <FiChevronDown
-                  className={`transition-transform ${isCategoriesOpen ? "rotate-180" : ""}`}
-                />
+                <FiChevronDown className={`transition ${isCategoriesOpen ? "rotate-180" : ""}`} />
               </button>
 
               <AnimatePresence>
@@ -75,12 +72,7 @@ const SecondHeader = () => {
                           <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
                             {cat.icon}
                           </div>
-                          <div>
-                            <div className="text-sm font-bold">{cat.name}</div>
-                            <div className="text-[11px] text-gray-500">
-                              {cat.description}
-                            </div>
-                          </div>
+                          <div className="font-semibold text-sm">{cat.name}</div>
                         </button>
                       ))}
                     </div>
@@ -89,58 +81,57 @@ const SecondHeader = () => {
               </AnimatePresence>
             </div>
 
-            {/* QUICK CATEGORY BAR */}
-            <div className="flex-1 flex gap-2 overflow-x-auto no-scrollbar">
-              {categories.slice(0, 7).map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.name)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-2
-                    ${
-                      activeCategory === cat.name
-                        ? "bg-indigo-50 text-indigo-700 ring-1 ring-indigo-200"
-                        : "text-gray-600 hover:bg-gray-100"
-                    }`}
-                >
-                  {cat.icon}
-                  {cat.name}
-                </button>
-              ))}
-            </div>
           </div>
         </div>
       </div>
 
-      {/* ================= MOBILE ================= */}
+      {/* ================= MOBILE DROPDOWN ONLY ================= */}
       <div
         className="lg:hidden fixed left-0 right-0 z-40 bg-white border-b"
         style={{ top: NAVBAR_HEIGHT }}
       >
-        <div className="px-4 py-3 flex gap-3 overflow-x-auto no-scrollbar">
+        <div className="px-4 py-3">
+
+          {/* MOBILE BUTTON */}
           <button
-            onClick={() => setActiveCategory("All Products")}
-            className={`px-5 py-2 rounded-full text-xs font-bold ${
-              activeCategory === "All Products"
-                ? "bg-gray-900 text-white"
-                : "bg-gray-100 text-gray-600"
-            }`}
+            onClick={() => setIsMobileOpen(!isMobileOpen)}
+            className="w-full flex items-center justify-between px-4 py-2 bg-black text-white rounded-lg font-bold"
           >
-            All
+            <div className="flex items-center gap-2">
+              <FiGrid />
+              All Categories
+            </div>
+            <FiChevronDown className={`transition ${isMobileOpen ? "rotate-180" : ""}`} />
           </button>
 
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.name)}
-              className="px-5 py-2 rounded-full text-xs font-bold border whitespace-nowrap"
-            >
-              {cat.name}
-            </button>
-          ))}
+          {/* MOBILE DROPDOWN LIST */}
+          <AnimatePresence>
+            {isMobileOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="bg-white border rounded-xl shadow-lg mt-2 overflow-hidden"
+              >
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => {
+                      setActiveCategory(cat.name);
+                      setIsMobileOpen(false);
+                    }}
+                    className="flex items-center gap-3 px-4 py-3 border-b last:border-none hover:bg-gray-50 text-sm font-semibold"
+                  >
+                    {cat.icon}
+                    {cat.name}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
         </div>
       </div>
-
-      {/* BANNER REMOVED FROM HERE */}
     </>
   );
 };
