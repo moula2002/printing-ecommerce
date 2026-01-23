@@ -215,6 +215,8 @@ export default function ProductDetailsPage() {
       exit={{ opacity: 0 }}
       className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30"
     >
+
+
       {/* Success Notification */}
       <AnimatePresence>
         {showAddedToCart && (
@@ -786,38 +788,6 @@ export default function ProductDetailsPage() {
           </>
         )}
       </AnimatePresence>
-
-      {/* Mobile Bottom Action Bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-2xl z-40">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="text-xs text-gray-500">Total</div>
-            <div className="text-xl font-bold text-emerald-600">₹{(quantity * enhancedProduct.price).toLocaleString('en-IN')}</div>
-          </div>
-          <div className="flex gap-3">
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={handleAddToCart}
-              disabled={!enhancedProduct.inStock}
-              className={`px-4 py-3 border-2 rounded-xl font-bold transition ${enhancedProduct.inStock ?
-                'border-black text-black hover:bg-black hover:text-white' :
-                'border-gray-300 text-gray-400 cursor-not-allowed'}`}
-            >
-              Add to Cart
-            </motion.button>
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={handleBuyNowWithConfirm}
-              disabled={!enhancedProduct.inStock}
-              className={`px-6 py-3 rounded-xl font-bold transition ${enhancedProduct.inStock ?
-                'bg-black text-white hover:bg-gray-800' :
-                'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
-            >
-              Buy Now
-            </motion.button>
-          </div>
-        </div>
-      </div>
     </motion.div>
   );
 }
